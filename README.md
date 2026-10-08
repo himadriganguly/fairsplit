@@ -109,7 +109,13 @@ hermes skills install fairsplit
 hermes skills install himadriganguly/fairsplit/skills/fairsplit
 ```
 
-**Option 3: copy it manually** (no GitHub required):
+**Option 3: install from [ClawHub](https://clawhub.ai/himadriganguly/skills/fairsplit)**:
+
+```bash
+hermes skills install clawhub/fairsplit
+```
+
+**Option 4: copy it manually** (no GitHub required):
 
 ```bash
 git clone https://github.com/himadriganguly/fairsplit.git
@@ -121,6 +127,24 @@ To confirm the install, run `hermes skills list`, or type `/fairsplit` in a
 chat. Hub-installed skills go through Hermes's security scanner. See the
 [Skills System docs](https://hermes-agent.nousresearch.com/docs/user-guide/features/skills)
 for all install paths, including raw-URL installs.
+
+### Other agents
+
+FairSplit is written for Hermes, but the skill is a plain `SKILL.md` plus a
+standard-library Python script, so other agents that read Agent Skills can
+load it too:
+
+```bash
+# Claude Code, Codex, Cursor, and other agents supported by skills.sh
+npx skills add himadriganguly/fairsplit
+
+# OpenClaw
+clawhub install fairsplit
+```
+
+Outside Hermes the `fairsplit.*` config prompts don't run. Set
+`FAIRSPLIT_DATA_DIR` to choose where ledgers are stored; otherwise they go
+to `~/.hermes/data/fairsplit`.
 
 ## Configuration
 
@@ -408,10 +432,15 @@ Before you publish or tag a release:
 3. Keep `description` to one sentence of 60 characters or less, ending
    with a period. The Hub index truncates at about 57 characters, so the
    key point must come first.
-4. Publish:
+4. Push to `main` and tag the release (`git tag v1.0.1 && git push --tags`).
+   GitHub installs, Hermes taps, and skills.sh all read straight from the
+   repo, so nothing else is needed for them.
+5. Publish the new version to [ClawHub](https://clawhub.ai/himadriganguly/skills/fairsplit):
 
    ```bash
-   hermes skills publish skills/fairsplit --to github --repo himadriganguly/fairsplit
+   clawhub publish skills/fairsplit --slug fairsplit --name FairSplit \
+     --version <version> --changelog "<what changed>" \
+     --source-repo himadriganguly/fairsplit --source-path skills/fairsplit
    ```
 
 Hub installs are security-scanned. Keep `ledger.py` free of shell-outs,
