@@ -1,0 +1,10 @@
+__pycache__/
+*.pyc
+.DS_Store
+*.tmp
+
+# Local test/dev ledger data -- real groups belong in fairsplit.data_dir,
+# not in the repo.
+/data/
+*-summary.md
+*-expenses.csv
